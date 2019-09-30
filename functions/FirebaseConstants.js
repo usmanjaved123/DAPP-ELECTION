@@ -1,0 +1,1 @@
+exports.FIREBASE_DATABASE_CANDIDATE_PATH = '/Candidates';
