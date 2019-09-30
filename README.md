@@ -14,5 +14,13 @@ npm install
 npm install -g webpack webpack-cli
 
 truffle migrate --reset
+npm install -firebase-tools
+firebase login
+firebase init functions
+*
+-select existing project, HUKM
+-select javascript
+*
+firebase deploy -only functions
 npm run start
 ```
