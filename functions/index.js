@@ -36,3 +36,31 @@ exports.addCandidate = functions.https.onRequest(async (request, response) => {
     });
     response.end("Write Successful");
 });
+
+
+// Descirption: async function that takes voter params as input and 
+// inserts into the path at 'constants.FIREBASE_DATABASE_VOTER_PATH'
+// in firebase realtime database.
+//
+// Call function with url: https://us-central1-hukm-891f5.cloudfunctions.net/addVoters?
+// Append parameters to url as such: cnic=35207, name=Ganju, password=qwerty, key=qwertyui
+
+exports.addVoters = functions.https.onRequest(async (request, response) => {
+    
+    // get info encoded in url
+    let cnic = request.query.cnic;
+    let name = request.query.name;
+    let key = request.query.key;
+    let password = request.query.password;
+    let constituency = request.query.constituency;
+
+    // Push the new message into the Realtime Database using the Firebase Admin SDK.
+    const snapshot = await admin.database().ref(constants.FIREBASE_DATABASE_VOTER_PATH).push({
+        cnic: cnic,
+        name: name,
+        key: key,
+        password: password,
+        constituency: constituency,
+    });
+    response.end("Write Successful");
+});

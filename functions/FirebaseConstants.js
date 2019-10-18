@@ -1,1 +1,2 @@
 exports.FIREBASE_DATABASE_CANDIDATE_PATH = '/Candidates';
+exports.FIREBASE_DATABASE_VOTER_PATH = '/Voters';
