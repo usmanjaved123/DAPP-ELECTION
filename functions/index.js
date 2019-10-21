@@ -64,3 +64,35 @@ exports.addVoters = functions.https.onRequest(async (request, response) => {
     });
     response.end("Write Successful");
 });
+
+
+// Description: async admin user check function that takes parameters encoded in url as input and
+// returns a json format response
+
+// URL: https://us-central1-hukm-891f5.cloudfunctions.net/adminLogin
+// URL with parameters: https://us-central1-hukm-891f5.cloudfunctions.net/adminLogin?name=uzair&password=uzair@123
+
+// response: Json format
+// if user found response will be {
+//    userExists: true 
+// }
+// else value will be defaulted to false
+
+exports.adminLogin = functions.https.onRequest(async (request, response) => {
+
+    // get info encoded in url
+    let username = request.query.name;
+    let password = request.query.password;
+    
+    await admin.database().ref("/Admin").once('value').then(function (snapshot){
+        snapshot.forEach(function (node) {
+            const pass = node.child("/password").val();
+            const name = node.child("/username").val();
+            if (username == name && password == pass) {
+                response.json({ userExists: true});
+            }
+        })
+        response.json({userExists: false});
+    });
+
+});
